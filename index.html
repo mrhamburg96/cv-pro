@@ -325,7 +325,7 @@
 <script>
 let uiLang = 'ru';
 let docLang = 'German';
-const stripe = Stripe('pk_live_51TQQm21OF8ZNoN9mSicwbiekmyZ12uZiJAY89jBxCc07O6tHxq3pglhJWV1dSNsioogAj3EUSX0obaGvAYc9ecOQ00xH5IkVFj');
+const stripe = Stripe('pk_test_51TQQm21OF8ZNoN9mkmOt1NwDzzprUWmq5nvw3AwoIjG7KvtlCR4Lez1r6g0KDevviFFYfjchaDRWXgjgz7yJjJYa00WtdvSZNm');
 
 function setLang(l) {
   uiLang = l;
@@ -368,7 +368,7 @@ async function startPayment() {
 
   
 
-  window.location.href = 'https://buy.stripe.com/fZu28jbHY8si01DbHs3Je00';
+  window.location.href = 'https://buy.stripe.com/test_fZu28jbHY8si01DbHs3Je00';
   btn.disabled = false;
 
 }
@@ -514,7 +514,7 @@ Output ONLY the cover letter text. No preamble, no explanation.`
   progressFill.style.width = '100%';
   setTimeout(() => { progressBar.style.display = 'none'; progressFill.style.width = '0%'; }, 800);
 
-  window.location.href = 'https://buy.stripe.com/fZu28jbHY8si01DbHs3Je00';
+  window.location.href = 'https://buy.stripe.com/test_fZu28jbHY8si01DbHs3Je00';
   btn.disabled = false;
   btn.innerHTML = `<span>${uiLang === 'ru' ? 'Создать заново' : 'Regenerate'}</span>`;
 }
@@ -661,7 +661,7 @@ Output ONLY the cover letter text. No preamble, no explanation.`
   progressFill.style.width = '100%';
   setTimeout(() => { progressBar.style.display = 'none'; progressFill.style.width = '0%'; }, 800);
 
-  window.location.href = 'https://buy.stripe.com/fZu28jbHY8si01DbHs3Je00';
+  window.location.href = 'https://buy.stripe.com/test_fZu28jbHY8si01DbHs3Je00';
   btn.disabled = false;
   btn.innerHTML = `<span data-ru="${uiLang === 'ru' ? 'Создать заново' : 'Regenerate'}" data-en="${uiLang === 'en' ? 'Regenerate' : 'Создать заново'}">${uiLang === 'ru' ? 'Создать заново' : 'Regenerate'}</span>`;
 }
