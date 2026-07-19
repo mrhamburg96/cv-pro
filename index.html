@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV Pro — Resume & Cover Letter</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a18; --ink2: #4a4a45; --ink3: #8a8a82;
+    --paper: #f8f6f0; --paper2: #eeeae0; --paper3: #e2ddd0;
+    --gold: #c8a96e; --gold2: #a08550;
+    --line: rgba(26,26,24,0.12); --r: 6px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); font-size: 15px; line-height: 1.6; min-height: 100vh; }
+
+  .lang-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: flex-end; align-items: center; padding: 12px 32px; background: var(--paper); border-bottom: 0.5px solid var(--line); }
+  .lang-toggle { display: flex; border: 1px solid var(--line); border-radius: 99px; overflow: hidden; }
+  .lang-btn { padding: 4px 16px; font-size: 12px; font-family: 'DM Sans', sans-serif; background: transparent; border: none; cursor: pointer; color: var(--ink3); letter-spacing: 0.05em; transition: all 0.2s; }
+  .lang-btn.active { background: var(--ink); color: var(--paper); }
+
+  .hero { padding: 110px 32px 40px; max-width: 700px; margin: 0 auto; text-align: center; }
+  .hero-eyebrow { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold2); margin-bottom: 16px; }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(32px, 5vw, 52px); line-height: 1.1; margin-bottom: 16px; }
+  .hero h1 em { font-style: italic; color: var(--gold2); }
+  .hero p { font-size: 15px; color: var(--ink2); max-width: 440px; margin: 0 auto 32px; }
+
+  .form-wrap { max-width: 680px; margin: 0 auto; padding: 0 32px 80px; }
+  .card { background: white; border: 0.5px solid var(--line); border-radius: 16px; overflow: hidden; }
+  .card-section { padding: 26px 30px; border-bottom: 0.5px solid var(--line); }
+  .card-section:last-child { border-bottom: none; }
+  .section-title { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink3); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+  .section-title::after { content: ''; flex: 1; height: 0.5px; background: var(--line); }
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .field-grid.full { grid-template-columns: 1fr; }
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field label { font-size: 12px; color: var(--ink2); font-weight: 500; }
+  .field input, .field textarea { font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); background: var(--paper); border: 0.5px solid var(--line); border-radius: var(--r); padding: 9px 12px; width: 100%; transition: border-color 0.2s, background 0.2s; }
+  .field textarea { min-height: 85px; resize: vertical; line-height: 1.6; }
+  .field input:focus, .field textarea:focus { outline: none; border-color: var(--gold); background: white; }
+  .field input::placeholder, .field textarea::placeholder { color: var(--ink3); }
+
+  .lang-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+  .lang-pill { padding: 6px 16px; border-radius: 99px; border: 0.5px solid var(--line); background: var(--paper); color: var(--ink2); font-size: 13px; cursor: pointer; transition: all 0.15s; font-family: 'DM Sans', sans-serif; }
+  .lang-pill.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  .submit-btn { width: 100%; padding: 16px; background: var(--ink); color: var(--paper); border: none; border-radius: 10px; font-family: 'DM Serif Display', serif; font-size: 19px; cursor: pointer; transition: opacity 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .submit-btn:hover { opacity: 0.88; }
+  .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .submit-note { font-size: 12px; color: var(--ink3); text-align: center; margin-top: 10px; }
+
+  #successPage { display: none; padding: 140px 32px 80px; max-width: 500px; margin: 0 auto; text-align: center; }
+  #successPage h2 { font-family: 'DM Serif Display', serif; font-size: 36px; margin-bottom: 16px; }
+  #successPage p { color: var(--ink2); font-size: 15px; line-height: 1.7; }
+  .email-highlight { display: inline-block; background: var(--paper2); border-radius: 8px; padding: 4px 12px; font-weight: 500; color: var(--ink); margin: 4px 0; }
+  .checkmark { font-size: 56px; margin-bottom: 20px; }
+
+  .spinner { width: 16px; height: 16px; border: 2px solid rgba(248,246,240,0.3); border-top-color: var(--paper); border-radius: 50%; animation: spin 0.7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 600px) {
+    .field-grid { grid-template-columns: 1fr; }
+    .hero, .form-wrap { padding-left: 18px; padding-right: 18px; }
+    .card-section { padding: 20px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <div class="lang-toggle">
+    <button class="lang-btn" onclick="setLang('ua')">UA</button>
+    <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+    <button class="lang-btn" onclick="setLang('de')">DE</button>
+  </div>
+</div>
+
+<!-- MAIN PAGE -->
+<div id="mainPage">
+  <div class="hero">
+    <div class="hero-eyebrow" data-ua="Резюме та супровідний лист" data-ru="Резюме и сопроводительное письмо" data-de="Lebenslauf & Anschreiben">Резюме и сопроводительное письмо</div>
+    <h1 data-ua="Документи, що<br><em>відкривають двері</em>" data-ru="Документы, которые<br><em>открывают двери</em>" data-de="Dokumente, die<br><em>Türen öffnen</em>">Документы, которые<br><em>открывают двери</em></h1>
+    <p data-ua="Заповни форму — отримай готовий пакет на email. Адаптовано під твою вакансію." data-ru="Заполни форму — получи готовый пакет на email. Адаптировано под твою вакансию." data-de="Formular ausfüllen — Unterlagen per Email erhalten. Auf deine Stelle zugeschnitten.">Заполни форму — получи готовый пакет на email. Адаптировано под твою вакансию.</p>
+  </div>
+
+  <div class="form-wrap">
+    <div class="card">
+
+      <div class="card-section">
+        <div class="section-title" data-ua="Особисті дані" data-ru="Личные данные" data-de="Persönliche Daten">Личные данные</div>
+        <div class="field-grid">
+          <div class="field"><label data-ua="Ім'я та прізвище *" data-ru="Имя и фамилия *" data-de="Vor- und Nachname *">Имя и фамилия *</label><input type="text" id="name" placeholder="Anna Müller"></div>
+          <div class="field"><label data-ua="Email *" data-ru="Email *" data-de="Email *">Email *</label><input type="email" id="email" placeholder="anna@example.com"></div>
+          <div class="field"><label data-ua="Телефон" data-ru="Телефон" data-de="Telefon">Телефон</label><input type="text" id="phone" placeholder="+41 79 123 45 67"></div>
+          <div class="field"><label data-ua="Адреса" data-ru="Адрес" data-de="Adresse">Адрес</label><input type="text" id="address" placeholder="Bahnhofstrasse 1, 8001 Zürich"></div>
+          <div class="field"><label data-ua="Дата народження" data-ru="Дата рождения" data-de="Geburtsdatum">Дата рождения</label><input type="text" id="dob" placeholder="01.01.1990"></div>
+          <div class="field"><label data-ua="Громадянство / дозвіл" data-ru="Гражданство / разрешение" data-de="Nationalität / Ausweis">Гражданство / разрешение</label><input type="text" id="nationality" placeholder="Ukrainisch / Ausweis B"></div>
+          <div class="field"><label data-ua="Сімейний стан" data-ru="Семейное положение" data-de="Zivilstand">Семейное положение</label><input type="text" id="marital" placeholder="Ledig / Verheiratet"></div>
+          <div class="field"><label data-ua="Місто" data-ru="Город" data-de="Wohnort">Город</label><input type="text" id="location" placeholder="Zürich"></div>
+        </div>
+        <div style="margin-top:14px">
+          <label style="font-size:12px;color:var(--ink2);font-weight:500;display:block;margin-bottom:6px" data-ua="Фото (опціонально)" data-ru="Фото (опционально)" data-de="Foto (optional)">Фото <span style="color:var(--ink3);font-weight:400">(опционально)</span></label>
+          <div id="photoDropZone" onclick="document.getElementById('photoInput').click()" style="border:1.5px dashed var(--line);border-radius:var(--r);padding:20px;text-align:center;cursor:pointer;background:var(--paper);transition:border-color 0.2s">
+            <div id="photoPreview" style="display:none;margin-bottom:8px"><img id="photoImg" style="max-width:80px;max-height:100px;border-radius:4px;object-fit:cover"></div>
+            <div id="photoPlaceholder" style="color:var(--ink3);font-size:13px">📎 <span data-ua="Натисни щоб вибрати фото" data-ru="Нажми чтобы выбрать фото" data-de="Foto auswählen">Нажми чтобы выбрать фото</span></div>
+            <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="handlePhoto(this)">
+          </div>
+        </div>
+      </div>
+
+      <div class="card-section">
+        <div class="section-title" data-ua="Досвід роботи" data-ru="Опыт работы" data-de="Berufserfahrung">Опыт работы</div>
+        <div class="field-grid full">
+          <div class="field"><label data-ua="Бажана посада *" data-ru="Желаемая должность *" data-de="Gewünschte Stelle *">Желаемая должность *</label><input type="text" id="position" placeholder="Marketing Manager"></div>
+          <div class="field"><label data-ua="Досвід роботи * (місце, період, обов'язки)" data-ru="Опыт работы * (место, период, обязанности)" data-de="Berufserfahrung * (Ort, Zeitraum, Aufgaben)">Опыт работы *</label><textarea style="min-height:120px" id="experience" placeholder="2019–2023 — Nestlé, Zürich. Маркетолог. Кампании DACH.&#10;2015–2019 — ..."></textarea></div>
+        </div>
+      </div>
+
+      <div class="card-section">
+        <div class="section-title" data-ua="Освіта та навички" data-ru="Образование и навыки" data-de="Ausbildung & Kenntnisse">Образование и навыки</div>
+        <div class="field-grid full">
+          <div class="field"><label data-ua="Освіта" data-ru="Образование" data-de="Ausbildung">Образование</label><textarea id="education" placeholder="2015 — Universität Zürich, BA Wirtschaft&#10;2010 — Schule, Kyiv"></textarea></div>
+          <div class="field"><label data-ua="Мови" data-ru="Языки" data-de="Sprachen">Языки</label><input type="text" id="languages" placeholder="Deutsch B2, Englisch C1, Ukrainisch Muttersprache"></div>
+          <div class="field"><label data-ua="Навички / програми" data-ru="Навыки / программы" data-de="Kenntnisse / Software">Навыки / программы</label><input type="text" id="skills" placeholder="MS Office, SAP, Führerausweis B"></div>
+          <div class="field"><label data-ua="Додаткове (курси, волонтерство)" data-ru="Дополнительно (курсы, волонтёрство)" data-de="Zusätzlich (Kurse, Weiterbildung)">Дополнительно</label><textarea id="extra" placeholder="2023 — Kurs Digital Marketing, Zürich&#10;Führerausweis Kat. B"></textarea></div>
+        </div>
+      </div>
+
+      <div class="card-section">
+        <div class="section-title" data-ua="Цільова вакансія" data-ru="Целевая вакансия" data-de="Zielvakanz">Целевая вакансия</div>
+        <div class="field-grid full">
+          <div class="field"><label data-ua="Назва компанії" data-ru="Название компании" data-de="Firmenname">Название компании</label><input type="text" id="company" placeholder="Google Switzerland"></div>
+          <div class="field"><label data-ua="Опис вакансії / побажання" data-ru="Описание вакансии / пожелания" data-de="Stellenbeschreibung / Hinweise">Описание вакансии</label><textarea id="jobdesc" placeholder="Вакансия требует опыта в digital marketing, знания немецкого языка..."></textarea></div>
+        </div>
+      </div>
+
+      <div class="card-section">
+        <div class="section-title" data-ua="Мова документів" data-ru="Язык документов" data-de="Sprache der Dokumente">Язык документов</div>
+        <div class="lang-pills">
+          <span class="lang-pill active" data-lang="German">Deutsch</span>
+          <span class="lang-pill" data-lang="English">English</span>
+          <span class="lang-pill" data-lang="French">Français</span>
+          <span class="lang-pill" data-lang="Russian">Русский</span>
+          <span class="lang-pill" data-lang="Ukrainian">Українська</span>
+        </div>
+      </div>
+
+      <div class="card-section">
+        <button class="submit-btn" id="submitBtn" onclick="submitForm()">
+          <span id="btnText" data-ua="Отримати документи" data-ru="Получить документы" data-de="Unterlagen erstellen">Получить документы</span>
+        </button>
+        <p class="submit-note" data-ua="Документи надійдуть на email протягом 2 хвилин" data-ru="Документы придут на email в течение 2 минут" data-de="Unterlagen kommen per Email innerhalb von 2 Minuten">Документы придут на email в течение 2 минут</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS PAGE -->
+<div id="successPage">
+  <div class="checkmark">✉️</div>
+  <h2 data-ua="Відправлено!" data-ru="Отправлено!" data-de="Gesendet!">Отправлено!</h2>
+  <p data-ua="Ваші документи готуються. Незабаром надійдуть на" data-ru="Ваши документы готовятся. Скоро придут на" data-de="Ihre Unterlagen werden erstellt. In Kürze gesendet an">Ваши документы готовятся. Скоро придут на</p>
+  <br>
+  <div class="email-highlight" id="emailDisplay"></div>
+</div>
+
+<script>
+let uiLang = 'ru';
+let docLang = 'German';
+const WEBHOOK = 'https://hook.eu1.make.com/8wy92lrtv3fqlahutm69c3xh1yv51vlu';
+
+function setLang(l) {
+  uiLang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l || b.textContent.toLowerCase() === l));
+  document.querySelectorAll('[data-ru]').forEach(el => {
+    const txt = el.dataset[l] || el.dataset.ru;
+    if (!txt) return;
+    if (el.tagName === 'H1' || el.tagName === 'H2') { el.innerHTML = txt; return; }
+    if (['INPUT','TEXTAREA'].includes(el.tagName)) return;
+    el.textContent = txt;
+  });
+}
+
+// set data-lang on buttons
+document.querySelectorAll('.lang-btn').forEach(b => {
+  b.dataset.lang = b.textContent.toLowerCase();
+});
+
+document.querySelectorAll('.lang-pill').forEach(p => {
+  p.addEventListener('click', () => {
+    document.querySelectorAll('.lang-pill').forEach(x => x.classList.remove('active'));
+    p.classList.add('active');
+    docLang = p.dataset.lang;
+  });
+});
+
+function val(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+function handlePhoto(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  const img = new Image();
+  img.onload = function() {
+    const maxW = 200, maxH = 260;
+    let w = img.width, h = img.height;
+    if (w > maxW) { h = h * maxW / w; w = maxW; }
+    if (h > maxH) { w = w * maxH / h; h = maxH; }
+    canvas.width = w; canvas.height = h;
+    ctx.drawImage(img, 0, 0, w, h);
+    const base64 = canvas.toDataURL('image/jpeg', 0.9);
+    document.getElementById('photoImg').src = base64;
+    document.getElementById('photoPreview').style.display = 'block';
+    document.getElementById('photoPlaceholder').style.display = 'none';
+    document.getElementById('photoDropZone').style.borderColor = 'var(--gold)';
+    window._photoBase64 = base64;
+  };
+  img.src = URL.createObjectURL(file);
+}
+
+const alerts = {
+  name: { ua: "Введи ім'я", ru: 'Введи имя', de: 'Name eingeben' },
+  email: { ua: 'Введи email', ru: 'Введи email', de: 'Email eingeben' },
+  position: { ua: 'Введи бажану посаду', ru: 'Введи желаемую должность', de: 'Stelle eingeben' },
+  experience: { ua: 'Опиши досвід роботи', ru: 'Опиши опыт работы', de: 'Erfahrung eingeben' },
+};
+
+async function submitForm() {
+  const name = val('name'), email = val('email'), position = val('position'), experience = val('experience');
+  if (!name) { alert(alerts.name[uiLang]); return; }
+  if (!email || !email.includes('@')) { alert(alerts.email[uiLang]); return; }
+  if (!position) { alert(alerts.position[uiLang]); return; }
+  if (!experience) { alert(alerts.experience[uiLang]); return; }
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div>';
+
+  const payload = { name, email, phone: val('phone'), address: val('address'), dob: val('dob'), nationality: val('nationality'), marital: val('marital'), location: val('location'), position, experience, education: val('education'), languages: val('languages'), skills: val('skills'), extra: val('extra'), company: val('company'), jobdesc: val('jobdesc'), photo: (window._photoBase64 || '').replace('data:image/jpeg;base64,', ''), docLang, lang: uiLang };
+
+  try {
+    await fetch(WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+  } catch(e) {}
+
+  document.getElementById('mainPage').style.display = 'none';
+  document.getElementById('successPage').style.display = 'block';
+  document.getElementById('emailDisplay').textContent = email;
+  setLang(uiLang);
+}
+</script>
+</body>
+</html>
